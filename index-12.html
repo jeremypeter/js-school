@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <style>
+    body {
+      max-width: 960px;
+      margin: 0 auto;
+    }
+  </style>
+
+</head>
+
+<body>
+
+  <script>
+
+    addHeading();
+    addParagraph();
+    addLikeButton();
+    addShareButton();
+
+    // Execute the a long running synchronous task that blocks the event loop
+    // synchronousRequest(10, addListOfAnimals);
+
+    // Execute the a long running "macro" Asynchronous task that DOESN'T blocks the event loop
+    // asynchronousRequest(10, addListOfAnimals);
+
+    // Execute a "micro" asynchronous task ()
+    // Promise.resolve({ name: 'Promise completed.'})
+    //   .then((data) => {
+    //     var p = document.createElement('p');
+    //     p.textContent = data.name;
+    //     document.body.appendChild(p);
+    //   });
+
+
+    // fetch('https://jsonplaceholder.typicode.com/todos/1')
+    //   .then(response => response.json())
+    //   .then(json => addTodos(json));
+
+    /******************************************************************
+     * Function Declarations
+     ******************************************************************/
+
+    function addTodos(json){
+      var code = document.createElement('p');
+      console.log(json)
+      code.innerHTML = `
+        <pre>${JSON.stringify(json)}</pre>
+      `;
+
+      document.body.appendChild(code);
+    }
+
+    function addLikeButton(){
+      var likes = 0;
+      var button = document.createElement('button');
+      button.id = 'likes-button';
+      button.innerHTML = `Likes - <span id="likes">${likes}</span>`;
+      document.body.appendChild(button);
+
+      document.querySelector('#likes-button').addEventListener('click', function(evt){
+        likes++;
+        document.querySelector('#likes').textContent = likes;
+      });
+    }
+
+    function addShareButton(){
+      var shares = 0;
+      var button = document.createElement('button');
+      button.id = 'shares-button'
+      button.innerHTML = `Shares - <span id="share-counter">${shares}</span>`;
+      document.body.appendChild(button);
+
+      document.querySelector('#shares-button').addEventListener('click', function(evt){
+        shares++;
+        document.querySelector('#share-counter').textContent = shares;
+      });
+    }
+
+    function addHeading(){
+      var h1 = document.createElement('h1');
+      h1.textContent = 'Welcome to JS 101';
+      document.body.appendChild(h1);
+    }
+
+    function addParagraph(){
+      var p = document.createElement('p');
+      p.textContent = 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ipsa numquam, animi nihil aspernatur sint dolor cum, ipsum, ratione quos eius suscipit adipisci qui ex. Earum delectus quam fugiat praesentium repudiandae!';
+      document.body.appendChild(p);
+    }
+
+    function addListOfAnimals(data){
+      var ul = document.createElement('ul');
+
+      data.forEach(function(item){
+        var li = document.createElement('li');
+        li.textContent = item.name;
+        ul.appendChild(li);
+      });
+
+      document.body.appendChild(ul);
+    }
+
+    function synchronousRequest(seconds, callback) {
+      console.log('Requesting data...');
+      var waitUntil = new Date().getTime() + seconds * 1000;
+      while (new Date().getTime() < waitUntil) true;
+      console.log('Data received.');
+      callback([
+        { id: 1, name: 'Cat' },
+        { id: 2, name: 'Dog' },
+        { id: 2, name: 'Bird' }
+      ]);
+    }
+
+    function asynchronousRequest(seconds, callback) {
+      console.log('Requesting data...');
+      setTimeout(function () {
+        console.log('Data received.');
+        callback([
+          { id: 1, name: 'Cat' },
+          { id: 2, name: 'Dog' },
+          { id: 2, name: 'Bird' }
+        ]);
+      }, 1000*seconds);
+    }
+
+  </script>
+</body>
+
+</html>
