@@ -5,8 +5,11 @@
   <title>Modal</title>
   <link rel="stylesheet" href="modal.css">
   <style>
-
+    .hide { display: none; }
   </style>
+
+
+
 </head>
 <body>
   <script>
@@ -15,15 +18,15 @@
     function Modal() {}
 
 
-    Modal.prototype.createContainer = function(){
+    Modal.prototype.createContainer = function(str){
       // - Create a div element.
       // - Add a class of `modal` to the div element.
       // - Add some lipsum text to the div element.
       // - Append the div element to the body.
       const div = document.createElement('div');
       div.classList.add('modal');
-      div.textContent = 'Lipsum text adslfkjadsf lk flakldjf';
-      div.style.display = 'none';
+      div.classList.add('hide');
+      div.textContent = str;
       div.style.backgroundColor = 'gray';
       document.body.appendChild(div);
     };
@@ -42,25 +45,19 @@
       const button = document.querySelector('button');
 
       button.addEventListener('click', function(){
-        const modal = document.getElementsByClassName('modal')[0];
-
-        // if modal is hidden show
-        if(modal.style.display === 'none') {
-          modal.style.display = 'block';
-        } else {
-          modal.style.display = 'none';
-        }
+        const modal = document.querySelector('.modal');
+        modal.classList.toggle('hide');
       });
     }
 
     Modal.prototype.open = function(){
-      const modal = document.getElementsByClassName('modal')[0];
-      modal.style.display = 'block';
+      const modal = document.querySelector('.modal');
+      modal.classList.remove('hide');
     }
 
     Modal.prototype.close = function(){
-      const modal = document.getElementsByClassName('modal')[0];
-      modal.style.display = 'none';
+      const modal = document.querySelector('.modal');
+      modal.classList.add('hide');
     }
 
     // 1. Instantiate the `Modal` constructor
@@ -70,15 +67,22 @@
     modal.createButton();
 
     // 3. Add the container element to the page
-    modal.createContainer();
+    modal.createContainer('modal 1');
+    modal.createContainer('modal 2');
 
+    // Need to initialize events after elements have been created
     modal.initializeEvents();
+
+
+
 
 
     // After 20 seconds show modal again
     // setTimeout(function(){
     //   modal.open();
     // }, 5 * 1000)
+
+
 
   </script>
 </body>
