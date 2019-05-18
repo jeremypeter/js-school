@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Modal</title>
+  <link rel="stylesheet" href="modal.css">
+  <style>
+
+  </style>
+</head>
+<body>
+  <script>
+
+    // Create a "class" like contructor function
+    function Modal() {}
+
+
+    Modal.prototype.createContainer = function(){
+      // - Create a div element.
+      // - Add a class of `modal` to the div element.
+      // - Add some lipsum text to the div element.
+      // - Append the div element to the body.
+      const div = document.createElement('div');
+      div.classList.add('modal');
+      div.textContent = 'Lipsum text adslfkjadsf lk flakldjf';
+      div.style.display = 'none';
+      div.style.backgroundColor = 'gray';
+      document.body.appendChild(div);
+    };
+
+    Modal.prototype.createButton = function(){
+      // - Create a button element.
+      // - Add the text, "Open Modal", to the button element.
+      // - Append the button element to the body.
+      const button = document.createElement('button');
+      button.textContent = 'Open Modal';
+      document.body.appendChild(button);
+    };
+
+
+    Modal.prototype.initializeEvents = function(){
+      const button = document.querySelector('button');
+
+      button.addEventListener('click', function(){
+        const modal = document.getElementsByClassName('modal')[0];
+
+        // if modal is hidden show
+        if(modal.style.display === 'none') {
+          modal.style.display = 'block';
+        } else {
+          modal.style.display = 'none';
+        }
+      });
+    }
+
+    Modal.prototype.open = function(){
+      const modal = document.getElementsByClassName('modal')[0];
+      modal.style.display = 'block';
+    }
+
+    Modal.prototype.close = function(){
+      const modal = document.getElementsByClassName('modal')[0];
+      modal.style.display = 'none';
+    }
+
+    // 1. Instantiate the `Modal` constructor
+    const modal = new Modal();
+
+    // 2. Add the button element to the page
+    modal.createButton();
+
+    // 3. Add the container element to the page
+    modal.createContainer();
+
+    // 4. Initialize our click event and/or any other events we want to add.
+    modal.initializeEvents();
+
+
+
+  </script>
+</body>
+</html>
